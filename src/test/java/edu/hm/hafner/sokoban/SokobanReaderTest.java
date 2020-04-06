@@ -1,6 +1,5 @@
 package edu.hm.hafner.sokoban;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -14,11 +13,11 @@ import static java.util.Arrays.*;
 import static org.assertj.core.api.Assertions.*;
 
 /**
- * Tests the class {@link FileReader}.
+ * Tests the class {@link SokobanReader}.
  *
  * @author Ullrich Hafner
  */
-public class AsciiStringLevelConverterTest {
+public class SokobanReaderTest {
     /** Verifies that the "chaos.sok" level is correctly read. */
     @Test
     public void shouldReadChaosLevel() {
@@ -42,7 +41,7 @@ public class AsciiStringLevelConverterTest {
 
     private List<String> read(final String fileName) {
         try {
-            return Files.readAllLines(Paths.get(AsciiStringLevelConverterTest.class.getResource(fileName).toURI()));
+            return Files.readAllLines(Paths.get(SokobanReaderTest.class.getResource(fileName).toURI()));
         }
         catch (IOException | URISyntaxException exception) {
             throw new AssertionError(exception);
