@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Ullrich Hafner
  */
-public class MovingSokobanTest extends SokobanTest {
+public class SokobanGameModelTest extends SokobanTest {
     /** Verifies that a treasure can be moved. */
     @Test
     public void shouldMoveTreasureToTarget() {
