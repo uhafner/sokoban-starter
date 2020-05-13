@@ -5,19 +5,18 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import static edu.hm.hafner.sokoban.Field.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 /**
- * Various tests for the Sokoban model.
+ * Tests the classes {@link AbstractSokobanModel} and {@link SokobanGameModel}.
  *
  * @author Ullrich Hafner
  */
-@SuppressWarnings("ConstantConditions")
-public class SokobanTest {
+@SuppressWarnings({"NullAway", "ConstantConditions"})
+class SokobanTest {
     /** Verifies that null values are not stored. */
     @Test
-    public void shouldThrowNpeIfLevelIsNull() {
+    void shouldThrowNpeIfLevelIsNull() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokoban();
@@ -29,7 +28,7 @@ public class SokobanTest {
 
     /** Verifies that null values are not stored. */
     @Test
-    public void shouldThrowNpeIfFieldIsNull() {
+    void shouldThrowNpeIfFieldIsNull() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokoban();
@@ -43,7 +42,7 @@ public class SokobanTest {
 
     /** Verifies that null values are not stored. */
     @Test
-    public void shouldThrowNpeIfPlayerIsNull() {
+    void shouldThrowNpeIfPlayerIsNull() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -55,7 +54,7 @@ public class SokobanTest {
 
     /** Verifies that null values are not stored. */
     @Test
-    public void shouldThrowNpeIfTreasureIsNull() {
+    void shouldThrowNpeIfTreasureIsNull() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -67,7 +66,7 @@ public class SokobanTest {
 
     /** Verifies that the player is not placed on a wall. */
     @Test
-    public void shouldDetectInvalidWorldWithPlayerOnWall() {
+    void shouldDetectInvalidWorldWithPlayerOnWall() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -81,7 +80,7 @@ public class SokobanTest {
 
     /** Verifies that no treasure is placed on a wall. */
     @Test
-    public void shouldDetectInvalidWorldWithTreasureOnWall() {
+    void shouldDetectInvalidWorldWithTreasureOnWall() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -95,7 +94,7 @@ public class SokobanTest {
 
     /** Verifies that the player is not placed on a treasure. */
     @Test
-    public void shouldDetectInvalidWorldWithPlayerOnTreasure() {
+    void shouldDetectInvalidWorldWithPlayerOnTreasure() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -109,7 +108,7 @@ public class SokobanTest {
 
     /** Verifies that the number of targets is equal to the number of treasures. */
     @Test
-    public void shouldDetectInvalidWorldThatHasNotEnoughTargets() {
+    void shouldDetectInvalidWorldThatHasNotEnoughTargets() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -124,7 +123,7 @@ public class SokobanTest {
 
     /** Verifies that the number of targets is equal to the number of treasures. */
     @Test
-    public void shouldDetectInvalidWorldThatHasNotEnoughTreasures() {
+    void shouldDetectInvalidWorldThatHasNotEnoughTreasures() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -137,7 +136,7 @@ public class SokobanTest {
 
     /** Verifies that the player has been set. */
     @Test
-    public void shouldDetectInvalidWorldThatHasNoPlayer() {
+    void shouldDetectInvalidWorldThatHasNoPlayer() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -150,7 +149,7 @@ public class SokobanTest {
 
     /** Verifies that the field array is regular, i.e. the size of each line is the width. */
     @Test
-    public void shouldDetectIrregularArray() {
+    void shouldDetectIrregularArray() {
         assertThatThrownBy(() -> {
             // Given
             AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
@@ -160,24 +159,19 @@ public class SokobanTest {
 
     /** Verifies that duplicate treasures are skipped. */
     @Test
-    public void shouldSkipDuplicateTreasure() {
+    void shouldSkipDuplicateTreasure() {
         // Given
         AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
         sokoban.setPlayer(new Point(1, 1));
         sokoban.addTreasure(new Point(1, 2));
-        sokoban.addTreasure(new Point(1, 2));
 
-        // When
-        sokoban.validate();
-        boolean isSolved = sokoban.isSolved();
-
-        // Then
-        assertThat(isSolved).isFalse();
+        // When Then
+        assertThatIllegalStateException().isThrownBy(() -> sokoban.addTreasure(new Point(1, 2)));
     }
 
     /** Verifies that setting a player outside of the visible level is correctly detected. */
     @Test
-    public void shouldDetectPlayerOutsideOfLevel() {
+    void shouldDetectPlayerOutsideOfLevel() {
         shouldDetectPlayersOutsideOfField(
                 new Point(-1, 0), new Point(0, -1), // Links oben
                 new Point(2, 0), new Point(1, -1), // Rechts oben
@@ -191,7 +185,7 @@ public class SokobanTest {
             assertThatThrownBy(() -> {
                 // Given
                 AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
-                sokoban.setLevel(new Field[][]{
+                sokoban.setLevel(new Field[][] {
                         {WALL, WALL},
                         {WALL, TARGET},
                 });
@@ -204,7 +198,7 @@ public class SokobanTest {
 
     /** Verifies that setting a treasure outside of the visible level is correctly detected. */
     @Test
-    public void shouldDetectTreasureOutsideOfLevel() {
+    void shouldDetectTreasureOutsideOfLevel() {
         shouldDetectTreasuresOutsideOfField(
                 new Point(-1, 0), new Point(0, -1), // Links oben
                 new Point(2, 0), new Point(1, -1), // Rechts oben
@@ -218,7 +212,7 @@ public class SokobanTest {
             assertThatThrownBy(() -> {
                 // Given
                 AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
-                sokoban.setLevel(new Field[][]{
+                sokoban.setLevel(new Field[][] {
                         {WALL, WALL},
                         {WALL, TARGET},
                 });
@@ -231,7 +225,7 @@ public class SokobanTest {
 
     /** Verifies that a valid world with one treasure is correctly detected. */
     @Test
-    public void shouldValidateCorrectWorldWithOneTreasure() {
+    void shouldValidateCorrectWorldWithOneTreasure() {
         // Given
         AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
         sokoban.setPlayer(new Point(2, 3));
@@ -247,7 +241,7 @@ public class SokobanTest {
 
     /** Verifies that a valid world with two treasures is correctly detected. */
     @Test
-    public void shouldValidateCorrectWorldWithTwoTreasures() {
+    void shouldValidateCorrectWorldWithTwoTreasures() {
         // Given
         AbstractSokobanModel sokoban = createSokobanWithTwoTreasures();
         sokoban.setPlayer(new Point(1, 1));
@@ -264,7 +258,7 @@ public class SokobanTest {
 
     /** Verifies that a level has been solved. */
     @Test
-    public void shouldDetectSolvedWorldWithOneTreasure() {
+    void shouldDetectSolvedWorldWithOneTreasure() {
         // Given
         AbstractSokobanModel sokoban = createSokobanWithOneTreasure();
         sokoban.setPlayer(new Point(2, 3));
@@ -283,7 +277,7 @@ public class SokobanTest {
 
     /** Verifies that a level has been solved. */
     @Test
-    public void shouldDetectSolvedWorldWithTwoTreasures() {
+    void shouldDetectSolvedWorldWithTwoTreasures() {
         // Given
         AbstractSokobanModel sokoban = createSokobanWithTwoTreasures();
         sokoban.setPlayer(new Point(1, 1));
@@ -300,7 +294,7 @@ public class SokobanTest {
 
     /** Verifies that a level will be copied internally. */
     @Test
-    public void shouldCopyLevel() {
+    void shouldCopyLevel() {
         // Given
         Field[][] level = createLevelWithOneTreasure();
         AbstractSokobanModel sokoban = createSokoban();
@@ -341,7 +335,7 @@ public class SokobanTest {
     }
 
     private Field[][] createIrregularArray() {
-        return new Field[][]{
+        return new Field[][] {
                 {WALL, WALL, WALL, WALL},
                 {WALL, FLOOR, TARGET, WALL},
                 {WALL, FLOOR, FLOOR, WALL, WALL, WALL},
@@ -353,7 +347,7 @@ public class SokobanTest {
     }
 
     private Field[][] createLevelWithOneTreasure() {
-        return new Field[][]{
+        return new Field[][] {
                 {WALL, WALL, WALL, WALL, BACKGROUND, BACKGROUND},
                 {WALL, FLOOR, TARGET, WALL, BACKGROUND, BACKGROUND},
                 {WALL, FLOOR, FLOOR, WALL, WALL, WALL},
@@ -365,7 +359,7 @@ public class SokobanTest {
     }
 
     private Field[][] createLevelWithTwoTreasures() {
-        return new Field[][]{
+        return new Field[][] {
                 {WALL, WALL, WALL, WALL},
                 {WALL, FLOOR, TARGET, WALL},
                 {WALL, FLOOR, TARGET, WALL},

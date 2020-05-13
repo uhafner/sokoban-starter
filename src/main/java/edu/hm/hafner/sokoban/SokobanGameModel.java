@@ -6,8 +6,6 @@ package edu.hm.hafner.sokoban;
  * @author Ullrich Hafner
  */
 public class SokobanGameModel extends AbstractSokobanModel {
-    private int moves;
-
     /**
      * Creates a new model with the specified name.
      *
@@ -26,57 +24,43 @@ public class SokobanGameModel extends AbstractSokobanModel {
         // FIXME: implement correct movement
         Point point = getPlayer().moveLeft();
         if (point.getX() >= 0) {
-            moves++;
             setPlayer(point);
         }
     }
 
-    /**
-     * Moves the player to the right. If this is not possible, then nothing is done.
-     */
     @Override
     public void moveRight() {
-        // FIXME: implement correct movement
         Point point = getPlayer().moveRight();
         if (point.getX() < getWidth()) {
-            moves++;
             setPlayer(point);
         }
     }
 
-    /**
-     * Moves the player up. If this is not possible, then nothing is done.
-     */
     @Override
     public void moveUp() {
         // FIXME: implement correct movement
         Point point = getPlayer().moveUp();
         if (point.getY() >= 0) {
-            moves++;
             setPlayer(point);
         }
     }
 
-    /**
-     * Moves the player down. If this is not possible, then nothing is done.
-     */
     @Override
     public void moveDown() {
         // FIXME: implement correct movement
         Point point = getPlayer().moveDown();
         if (point.getY() < getHeight()) {
-            moves++;
             setPlayer(point);
         }
     }
 
     @Override
-    public String toString() {
-        if (isSolved()) {
-            return "Solved in " + moves + " moves!";
-        }
-        else {
-            return moves + " moves...";
-        }
+    public void reset() {
+        // FIXME: reset model to initial setup
+    }
+
+    @Override
+    protected void storeLevelState() {
+        // FIXME: Store the initial level state
     }
 }

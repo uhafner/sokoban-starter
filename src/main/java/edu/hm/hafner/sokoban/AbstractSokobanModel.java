@@ -1,5 +1,10 @@
 package edu.hm.hafner.sokoban;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Represents the game field of Sokoban.
  *
@@ -7,12 +12,12 @@ package edu.hm.hafner.sokoban;
  */
 public abstract class AbstractSokobanModel {
     private final String name;
-    private Field[][] fields;
+    private Field[][] fields = new Field[0][];
 
     private int width;
     private int height;
 
-    private final PointSet treasures = new PointSet();
+    private final List<Point> treasures = new ArrayList<>();
 
     private Point player;
     private int targetCount;
@@ -82,7 +87,8 @@ public abstract class AbstractSokobanModel {
     }
 
     /**
-     * Adds a treasure at the specified coordinates. If there is already a treasure at that position, nothing is done.
+     * Adds a treasure at the specified coordinates. If there is already a treasure at that position, an {@link
+     * IllegalStateException} is thrown.
      *
      * @param point
      *         the position of the treasure
@@ -91,8 +97,21 @@ public abstract class AbstractSokobanModel {
         if (point == null) {
             throw new NullPointerException("Treasure must not be null.");
         }
-
+        if (treasures.contains(point)) {
+            throw new IllegalStateException("There is already a treasure at " + point);
+        }
         treasures.add(point);
+    }
+
+    /**
+     * Adds all treasure at the specified coordinates. Clears the set of treasures before adding the new elements.
+     *
+     * @param startTreasures
+     *         the initial position of the treasure
+     */
+    public void addAllTreasures(final Collection<Point> startTreasures) {
+        treasures.clear();
+        treasures.addAll(startTreasures);
     }
 
     /**
@@ -121,6 +140,29 @@ public abstract class AbstractSokobanModel {
         ensureThatNoTreasureBelowPlayer();
         ensureThatNoWallBelowTreasures();
         ensureThatTreasuresAndTargetsMatch();
+
+        storeLevelState();
+    }
+
+    /**
+     * Resets the level to the initial configuration so that the game can be restarted. This method uses the state that
+     * has been stored in method {@link #storeLevelState()}.
+     *
+     * @see #storeLevelState()
+     */
+    protected void reset() {
+
+    }
+
+    /**
+     * Stores the level state so that the game can be restarted at any time. This method will be automatically invoked
+     * after a level has been read and validated (see {@link #validate()}).
+     *
+     * @see #validate()
+     * @see #reset()
+     */
+    protected void storeLevelState() {
+
     }
 
     private void ensureThatNoTreasureBelowPlayer() {
@@ -155,8 +197,7 @@ public abstract class AbstractSokobanModel {
     }
 
     private void ensureThatNoWallBelowTreasures() {
-        for (int i = 0; i < treasures.size(); i++) {
-            Point treasure = treasures.get(i);
+        for (Point treasure : treasures) {
             if (isWallAt(treasure)) {
                 throw new IllegalArgumentException("Treasure is on wall: " + treasure);
             }
@@ -164,7 +205,7 @@ public abstract class AbstractSokobanModel {
     }
 
     private boolean isWallAt(final Point position) {
-        return fields[position.getY()][position.getX()] == Field.WALL;
+        return getField(position) == Field.WALL;
     }
 
     /**
@@ -173,9 +214,8 @@ public abstract class AbstractSokobanModel {
      * @return {@code true} if this level has been solved, {@code false} otherwise
      */
     public boolean isSolved() {
-        for (int i = 0; i < treasures.size(); i++) {
-            Point treasure = treasures.get(i);
-            if (fields[treasure.getY()][treasure.getX()] != Field.TARGET) {
+        for (Point treasure : treasures) {
+            if (getField(treasure) != Field.TARGET) {
                 return false;
             }
         }
@@ -191,6 +231,9 @@ public abstract class AbstractSokobanModel {
      * @return the field at the specified position
      */
     public Field getField(final Point point) {
+        if (fields == null) {
+            throw new IllegalStateException("The field has not been initialized yet");
+        }
         return fields[point.getY()][point.getX()];
     }
 
@@ -208,8 +251,8 @@ public abstract class AbstractSokobanModel {
      *
      * @return the treasure positions.
      */
-    public PointSet getTreasures() {
-        return new PointSet(treasures);
+    public List<Point> getTreasures() {
+        return Collections.unmodifiableList(treasures);
     }
 
     /**

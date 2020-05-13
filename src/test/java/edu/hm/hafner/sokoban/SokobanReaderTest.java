@@ -1,5 +1,6 @@
 package edu.hm.hafner.sokoban;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -13,14 +14,14 @@ import static java.util.Arrays.*;
 import static org.assertj.core.api.Assertions.*;
 
 /**
- * Tests the class {@link SokobanReader}.
+ * Tests the class {@link FileReader}.
  *
  * @author Ullrich Hafner
  */
-public class SokobanReaderTest {
+class SokobanReaderTest {
     /** Verifies that the "chaos.sok" level is correctly read. */
     @Test
-    public void shouldReadChaosLevel() {
+    void shouldReadChaosLevel() {
         List<String> lines = read("/chaos.sok");
 
         AbstractSokobanModel sokoban = new SokobanReader().read("Chaos", lines);
@@ -50,7 +51,7 @@ public class SokobanReaderTest {
 
     /** Verifies that the "minicosmos.sok" level is correctly read. */
     @Test
-    public void shouldReadMiniCosmosLevel() {
+    void shouldReadMiniCosmosLevel() {
         List<String> lines = read("/minicosmos.sok");
 
         AbstractSokobanModel sokoban = new SokobanReader().read("Mini Cosmos", lines);
@@ -72,7 +73,7 @@ public class SokobanReaderTest {
 
     /** Verifies that a level with different line lengths is correctly read. */
     @Test
-    public void shouldReadAsymmetricLevel() {
+    void shouldReadAsymmetricLevel() {
         SokobanReader converter = new SokobanReader();
         String[] inputLevel = {
                 "####",
@@ -102,7 +103,7 @@ public class SokobanReaderTest {
 
     /** Verifies that a rectangular level with a player on a target is correctly read. */
     @Test
-    public void shouldReadRectangleLevel() {
+    void shouldReadRectangleLevel() {
         SokobanReader converter = new SokobanReader();
         String[] fields = {
                 "######",
@@ -131,14 +132,11 @@ public class SokobanReaderTest {
     }
 
     private void assertThatTreasuresAreAt(final AbstractSokobanModel sokoban, final Point... treasures) {
-        assertThat(sokoban.getTreasures().size()).isEqualTo(treasures.length);
-        for (Point treasure : treasures) {
-            assertThat(sokoban.getTreasures().contains(treasure)).isTrue();
-        }
+        assertThat(sokoban.getTreasures()).hasSize(treasures.length).containsExactly(treasures);
     }
 
     private void assertThatPlayerIsAt(final AbstractSokobanModel sokoban, final Point player) {
-        assertThat(sokoban.getPlayer().isEqualTo(player)).isTrue();
+        assertThat(sokoban.getPlayer()).as("Player at wrong position").isEqualTo(player);
     }
 
     private void assertThatFieldIsCorrect(final AbstractSokobanModel sokoban, final Field[][] expected) {

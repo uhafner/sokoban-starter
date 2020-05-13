@@ -10,10 +10,10 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Ullrich Hafner
  */
-public class SokobanGameModelTest extends SokobanTest {
+class SokobanGameModelTest extends SokobanTest {
     /** Verifies that a treasure can be moved. */
     @Test
-    public void shouldMoveTreasureToTarget() {
+    void shouldMoveTreasureToTarget() {
         AbstractSokobanModel sokoban = createLevel();
         assertThatPlayerIsAt(sokoban, new Point(3, 4));
         assertThatTreasuresAreAt(sokoban, new Point(2, 4), new Point(4, 5));
@@ -41,7 +41,7 @@ public class SokobanGameModelTest extends SokobanTest {
     }
 
     private void assertThatPlayerIsAt(final AbstractSokobanModel sokoban, final Point player) {
-        assertThat(sokoban.getPlayer().isEqualTo(player)).as("Player at wrong position").isTrue();
+        assertThat(sokoban.getPlayer()).as("Player at wrong position").isEqualTo(player);
     }
 
     private void assertThatTreasuresAreAt(final AbstractSokobanModel sokoban, final Point... treasures) {

@@ -6,5 +6,5 @@ package edu.hm.hafner.sokoban;
  * @author Ullrich Hafner
  */
 public enum Orientation {
-    LEFT, RIGHT, UP, DOWN
+    LEFT, RIGHT, UP, DOWN, SOLVED
 }

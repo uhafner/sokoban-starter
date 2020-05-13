@@ -3,74 +3,115 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>edu.hm.hafner</groupId>
-        <artifactId>codingstyle-pom</artifactId>
-        <version>1.0.4</version>
-        <relativePath/>
-    </parent>
-
+  <parent>
     <groupId>edu.hm.hafner</groupId>
-    <artifactId>sokoban</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>codingstyle-pom</artifactId>
+    <version>1.1.1</version>
+    <relativePath/>
+  </parent>
 
-    <packaging>jar</packaging>
+  <groupId>edu.hm.hafner</groupId>
+  <artifactId>sokoban</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
 
-    <name>Sokoban</name>
+  <packaging>jar</packaging>
 
-    <scm>
-        <connection>scm:git:git://github.com/uhafner/sokoban.git</connection>
-        <developerConnection>scm:git:git@github.com:uhafner/sokoban.git</developerConnection>
-        <url>https://github.com/uhafner/sokoban</url>
-        <tag>HEAD</tag>
-    </scm>
+  <name>Sokoban</name>
 
-    <licenses>
-        <license>
-            <name>MIT license</name>
-            <comments>All source code is copyrighted by Ullrich Hafner and licensed under the MIT license.</comments>
-        </license>
-    </licenses>
+  <scm>
+    <connection>scm:git:git://github.com/uhafner/sokoban.git</connection>
+    <developerConnection>scm:git:git@github.com:uhafner/sokoban.git</developerConnection>
+    <url>https://github.com/uhafner/sokoban</url>
+    <tag>HEAD</tag>
+  </scm>
 
-    <developers>
-        <developer>
-            <name>Ullrich Hafner</name>
-            <id>uhafner</id>
-            <email>ullrich.hafner@hm.edu</email>
-            <organization>Munich University of Applied Sciences</organization>
-            <organizationUrl>https://www.hm.edu/en/index.en.html</organizationUrl>
-        </developer>
-    </developers>
+  <licenses>
+    <license>
+      <name>MIT license</name>
+      <comments>All source code is copyrighted by Ullrich Hafner and licensed under the MIT license.</comments>
+    </license>
+  </licenses>
 
-    <url>https://www.cs.hm.edu/die_fakultaet/ansprechpartner/professoren/hafner/index.de.html</url>
+  <developers>
+    <developer>
+      <name>Ullrich Hafner</name>
+      <id>uhafner</id>
+      <email>ullrich.hafner@hm.edu</email>
+      <organization>Munich University of Applied Sciences</organization>
+      <organizationUrl>https://www.hm.edu/en/index.en.html</organizationUrl>
+    </developer>
+  </developers>
 
-    <properties>
-        <source.encoding>UTF-8</source.encoding>
-        <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+  <url>https://www.cs.hm.edu/die_fakultaet/ansprechpartner/professoren/hafner/index.de.html</url>
 
-        <module.name>${project.groupId}.analysis.model</module.name>
+  <properties>
+    <module.name>${project.groupId}.sokoban</module.name>
 
-        <!-- Project Dependencies Configuration -->
-        <commons.lang.version>3.10</commons.lang.version>
-        <commons.io.version>2.6</commons.io.version>
+    <!-- Project Dependencies Configuration -->
+    <codingstyle.version>1.1.0</codingstyle.version>
+    <commons.lang.version>3.10</commons.lang.version>
+    <commons.io.version>2.6</commons.io.version>
 
-        <argLine>-Djava.util.logging.config.file=logging.properties</argLine>
-    </properties>
+    <argLine>-Djava.util.logging.config.file=logging.properties</argLine>
+  </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons.lang.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons.io.version}</version>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>edu.hm.hafner</groupId>
+      <artifactId>codingstyle</artifactId>
+      <version>${codingstyle.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons.lang.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons.io.version}</version>
+    </dependency>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>edu.hm.hafner</groupId>
+      <artifactId>codingstyle</artifactId>
+      <version>${codingstyle.version}</version>
+      <scope>test</scope>
+      <type>test-jar</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>edu/hm/hafner/sokoban/*</include>
+          </includes>
+          <excludes>
+            <exclude>**/Sokoban.class</exclude>
+            <exclude>**/Sokoban$*</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+        <configuration>
+          <quiet>false</quiet>
+          <packages>
+            <package>edu.hm.hafner.sokoban</package>
+          </packages>
+          <entryPointClassPackage>edu.hm.hafner.sokoban.assertions</entryPointClassPackage>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
 
 </project>

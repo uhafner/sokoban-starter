@@ -1,5 +1,7 @@
 package edu.hm.hafner.sokoban;
 
+import java.util.Objects;
+
 /**
  * A point represents a location in {@code (x,y)} coordinate space,
  * specified in integer precision. Instances of this class are immutable.
@@ -42,19 +44,6 @@ public class Point {
     }
 
     /**
-     * Checks if this point is equal to the specified other point.
-     *
-     * @param other the other point
-     * @return {@code true} if this point is equal to the other point, {@code false} otherwise
-     */
-    public boolean isEqualTo(final Point other) {
-        if (other == null) {
-            return false;
-        }
-        return other.x == x && other.y == y;
-    }
-
-    /**
      * Returns the point left of this point.
      *
      * @return the point to the left
@@ -93,5 +82,22 @@ public class Point {
     @Override
     public String toString() {
         return display;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Point point = (Point) o;
+        return x == point.x && y == point.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
