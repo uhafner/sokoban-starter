@@ -20,13 +20,6 @@
 
   <name>Sokoban</name>
 
-  <scm>
-    <connection>scm:git:git://github.com/uhafner/sokoban.git</connection>
-    <developerConnection>scm:git:git@github.com:uhafner/sokoban.git</developerConnection>
-    <url>https://github.com/uhafner/sokoban</url>
-    <tag>HEAD</tag>
-  </scm>
-
   <licenses>
     <license>
       <name>MIT license</name>
