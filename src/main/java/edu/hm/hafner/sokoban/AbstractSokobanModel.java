@@ -10,6 +10,7 @@ import java.util.List;
  *
  * @author Ullrich Hafner
  */
+@SuppressWarnings({"PMD.GodClass", "PMD.AvoidThrowingNullPointerException"})
 public abstract class AbstractSokobanModel {
     private final String name;
     private Field[][] fields = new Field[0][];
@@ -19,7 +20,8 @@ public abstract class AbstractSokobanModel {
 
     private final List<Point> treasures = new ArrayList<>();
 
-    private Point player;
+    private Point player = new Point(0, 0);
+
     private int targetCount;
 
     /**
@@ -47,6 +49,7 @@ public abstract class AbstractSokobanModel {
      * @param level
      *         the level
      */
+    @SuppressWarnings("PMD.UseVarargs")
     public void setLevel(final Field[][] level) {
         width = level[0].length;
         height = level.length;
@@ -144,23 +147,10 @@ public abstract class AbstractSokobanModel {
         storeLevelState();
     }
 
-    /**
-     * Resets the level to the initial configuration so that the game can be restarted. This method uses the state that
-     * has been stored in method {@link #storeLevelState()}.
-     *
-     * @see #storeLevelState()
-     */
     protected void reset() {
 
     }
 
-    /**
-     * Stores the level state so that the game can be restarted at any time. This method will be automatically invoked
-     * after a level has been read and validated (see {@link #validate()}).
-     *
-     * @see #validate()
-     * @see #reset()
-     */
     protected void storeLevelState() {
 
     }

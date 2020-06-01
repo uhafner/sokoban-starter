@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -26,6 +27,7 @@ import static edu.hm.hafner.sokoban.Orientation.*;
  */
 @SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class Sokoban extends JPanel {
+    private static final long serialVersionUID = 3621359482117480904L;
     private static final String START_MESSAGE = "Press UP, DOWN, LEFT or RIGHT to start";
 
     /**
@@ -141,7 +143,7 @@ public class Sokoban extends JPanel {
         menu.add(restart);
     }
 
-    @SuppressFBWarnings("DM_EXIT")
+    @SuppressFBWarnings("DM_EXIT") @SuppressWarnings("PMD.DoNotCallSystemExit")
     private static void addExitMenu(final JMenu menu) {
         JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(e -> System.exit(0));
@@ -226,7 +228,7 @@ public class Sokoban extends JPanel {
         }
 
         private String asImageName(final Enum<?> type) {
-            return type.name().toLowerCase();
+            return type.name().toLowerCase(Locale.ENGLISH);
         }
 
         private void drawImage(final BufferedImage boardImage, final Point position, final String imageName) {
@@ -266,6 +268,8 @@ public class Sokoban extends JPanel {
                 final Sokoban game,
                 final SokobanGameRenderer painter, final JFrame frame, final String name,
                 final LocalHighScoreService uploadHighScore, final JLabel statusBar) {
+            super();
+
             this.sokoban = sokoban;
             this.levelScore = levelScore;
             this.game = game;
