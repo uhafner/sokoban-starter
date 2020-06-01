@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Ullrich Hafner
  */
-@SuppressWarnings({"NullAway", "ConstantConditions"})
+@SuppressWarnings({"NullAway", "ConstantConditions", "PMD.NullAssignment"})
 class SokobanTest {
     /** Verifies that null values are not stored. */
     @Test
@@ -328,6 +328,7 @@ class SokobanTest {
         return sokoban;
     }
 
+    @SuppressWarnings("PMD.UseVarargs")
     private void fillArrayWithTarget(final Field[][] level) {
         for (Field[] fields : level) {
             Arrays.fill(fields, TARGET);
