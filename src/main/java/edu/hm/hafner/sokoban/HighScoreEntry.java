@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author Ullrich Hafner
  */
-@SuppressWarnings({"PMD.MissingStaticMethodInNonInstantiatableClass", "PM<D.DataClass"})
+@SuppressWarnings({"PMD.MissingStaticMethodInNonInstantiatableClass", "PMD.DataClass"})
 public class HighScoreEntry {
     private final String playerName;
     private final int numberOfMoves;

@@ -100,6 +100,9 @@
           <packages>
             <package>edu.hm.hafner.sokoban</package>
           </packages>
+          <excludes>
+            <exclude>.*\.Sokoban</exclude>
+          </excludes>
           <entryPointClassPackage>edu.hm.hafner.sokoban.assertions</entryPointClassPackage>
         </configuration>
       </plugin>

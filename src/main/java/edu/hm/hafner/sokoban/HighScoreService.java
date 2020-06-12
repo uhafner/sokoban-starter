@@ -128,7 +128,8 @@ public interface HighScoreService {
      * A simple implementation of {@link FormattedPrinter} the prints the messages to {@code System.out}.
      */
     class SystemOutPrinter implements FormattedPrinter {
-        @Override
+        @Override @FormatMethod
+        @SuppressWarnings("PMD.SystemPrintln")
         public void print(final String format, final Object... args) {
             System.out.format(format, args);
             System.out.println();

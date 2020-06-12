@@ -139,6 +139,7 @@ class SokobanReaderTest {
         assertThat(sokoban.getPlayer()).as("Player at wrong position").isEqualTo(player);
     }
 
+    @SuppressWarnings("PMD.UseVarargs")
     private void assertThatFieldIsCorrect(final AbstractSokobanModel sokoban, final Field[][] expected) {
         for (int y = 0; y < sokoban.getHeight(); y++) {
             for (int x = 0; x < sokoban.getWidth(); x++) {
