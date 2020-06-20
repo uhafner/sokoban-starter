@@ -15,10 +15,11 @@ import javax.swing.*;
 
 import edu.hm.hafner.sokoban.HighScoreService.SystemOutPrinter;
 import edu.hm.hafner.sokoban.LevelInformationBoard.AttemptResult;
+import edu.hm.hafner.sokoban.model.Orientation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import static edu.hm.hafner.sokoban.Field.*;
-import static edu.hm.hafner.sokoban.Orientation.*;
+import static edu.hm.hafner.sokoban.model.Orientation.*;
 
 /**
  * Entry point for Sokoban.

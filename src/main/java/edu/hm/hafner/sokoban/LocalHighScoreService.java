@@ -4,6 +4,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import edu.hm.hafner.sokoban.model.HighScoreEntry;
+import edu.hm.hafner.sokoban.model.Orientation;
+
 /**
  * Empty implementation just to make sure that the class compiles.
  *

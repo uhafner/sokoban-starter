@@ -5,6 +5,8 @@ import java.util.Collections;
 
 import org.apache.commons.lang3.StringUtils;
 
+import edu.hm.hafner.sokoban.model.Orientation;
+
 /**
  * Empty implementation just to make sure that the class compiles.
  *

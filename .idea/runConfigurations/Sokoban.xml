@@ -4,7 +4,7 @@
     <module name="sokoban" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="edu.hm.hafner.sokoban.*" />
+        <option name="PATTERN" value="edu.hm.hafner.sokoban.model.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

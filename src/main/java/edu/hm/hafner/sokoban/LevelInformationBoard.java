@@ -2,6 +2,8 @@ package edu.hm.hafner.sokoban;
 
 import java.util.Collection;
 
+import edu.hm.hafner.sokoban.model.Orientation;
+
 /**
  * Controls the life cycle of a Sokoban level. Stores the moves for each attempt, records high scores, and so on.
  *

@@ -1,4 +1,4 @@
-package edu.hm.hafner.sokoban;
+package edu.hm.hafner.sokoban.model;
 
 /**
  * Player orientation. Used to provide different player graphics.
