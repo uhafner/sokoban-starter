@@ -86,7 +86,7 @@ public class Sokoban extends JPanel {
         String name = sokoban.getName();
 
         LevelInformationBoard levelScore = new LocalLevelInformationBoard(name);
-        LocalHighScoreService uploadHighScore = new LocalHighScoreService();
+        HighScoreService uploadHighScore = new CloudHighScoreService();
 
         SokobanGameRenderer painter = new SokobanGameRenderer();
         BufferedImage bitmap = painter.toImage(sokoban, DOWN);
@@ -119,7 +119,7 @@ public class Sokoban extends JPanel {
         frame.addKeyListener(new SokobanGameLoop(sokoban, levelScore, game, painter, frame, name, uploadHighScore, statusBar));
     }
 
-    private static void addPrintMenu(final LocalHighScoreService uploadHighScore, final JMenu menu) {
+    private static void addPrintMenu(final HighScoreService uploadHighScore, final JMenu menu) {
         JMenuItem print = new JMenuItem("Print");
         print.addActionListener(e -> uploadHighScore.printBoards(new SystemOutPrinter()));
         menu.add(print);
@@ -261,14 +261,14 @@ public class Sokoban extends JPanel {
         private final SokobanGameRenderer painter;
         private final JFrame frame;
         private final String name;
-        private final LocalHighScoreService uploadHighScore;
+        private final HighScoreService uploadHighScore;
         private final JLabel statusBar;
 
         @SuppressWarnings("checkstyle:ParameterNumber")
         SokobanGameLoop(final AbstractSokobanModel sokoban, final LevelInformationBoard levelScore,
                 final Sokoban game,
                 final SokobanGameRenderer painter, final JFrame frame, final String name,
-                final LocalHighScoreService uploadHighScore, final JLabel statusBar) {
+                final HighScoreService uploadHighScore, final JLabel statusBar) {
             super();
 
             this.sokoban = sokoban;
