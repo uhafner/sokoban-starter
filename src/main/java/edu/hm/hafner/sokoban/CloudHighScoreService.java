@@ -41,7 +41,6 @@ public class CloudHighScoreService implements HighScoreService {
     private static final String CLOUD_HIGH_SCORE_SERVICE_URL = "http://localhost:8085";
 
     private final OkHttpClient client = new OkHttpClient();
-    private final MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
 
     private static final TypeReference<List<HighScoreEntry>> ENTRY_LIST_TYPE_REFERENCE = new TypeReference<List<HighScoreEntry>>() {
     };
@@ -62,7 +61,7 @@ public class CloudHighScoreService implements HighScoreService {
             String url = getUrlWithLevelParam(levelName);
             Request request = new Request.Builder()
                     .url(url)
-                    .post(RequestBody.create(jsonMediaType, body))
+                    .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body))
                     .build();
 
             try (Response response = client.newCall(request).execute()) {
@@ -121,13 +120,18 @@ public class CloudHighScoreService implements HighScoreService {
     @Override
     public void printBoard(final String levelName, final FormattedPrinter printer) {
         List<HighScoreEntry> board = getBoard(levelName);
-        printer.print(LINE);
+        printLine(printer);
         printer.print("+%-73s+", levelName);
-        printer.print(LINE);
+        printLine(printer);
         System.out.format("|%-28s|%-9s|%-9s|%-24s|%n", "Player", "#Moves", "#Attempts", "Timestamp");
-        printer.print(LINE);
+        printLine(printer);
         board.forEach(e -> System.out.format("|%-28s|%9d|%9d|%24s|%n", e.getPlayerName(), e.getNumberOfMoves(),
                 e.getNumberOfAttempts(), e.getTimestamp()));
+        printLine(printer);
+    }
+
+    @SuppressWarnings("ErrorProne")
+    private void printLine(final FormattedPrinter printer) {
         printer.print(LINE);
     }
 
