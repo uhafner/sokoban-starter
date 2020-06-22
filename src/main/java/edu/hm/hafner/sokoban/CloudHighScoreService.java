@@ -35,7 +35,6 @@ import okhttp3.ResponseBody;
  */
 public class CloudHighScoreService implements HighScoreService {
     private static final int WIDTH = 73;
-    private static final String LINE = "+" + StringUtils.repeat('-', WIDTH) + "+";
     private static final String ALL = "all";
 
     private static final String CLOUD_HIGH_SCORE_SERVICE_URL = "http://localhost:8085";
@@ -130,9 +129,8 @@ public class CloudHighScoreService implements HighScoreService {
         printLine(printer);
     }
 
-    @SuppressWarnings("ErrorProne")
     private void printLine(final FormattedPrinter printer) {
-        printer.print(LINE);
+        printer.print("+%s+", StringUtils.repeat('-', WIDTH));
     }
 
     @Override
