@@ -6,6 +6,9 @@ import java.util.List;
 
 import com.google.errorprone.annotations.FormatMethod;
 
+import edu.hm.hafner.sokoban.model.HighScoreEntry;
+import edu.hm.hafner.sokoban.model.Orientation;
+
 /**
  * Manages the high scores of Sokoban levels.
  *
